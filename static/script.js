@@ -1,5 +1,6 @@
 function downloadExcel(boardId, frameId, nodeId) {
-    fetch("/get/board/" + boardId + "/frame/" + frameId + "/object" + nodeId + "/excel")
+    window.open("/get/board/" + boardId + "/frame/" + frameId + "/object/" + nodeId + "/excel", "_self")
+    // fetch()
 }
 
 function populateNodes(boardId, frameId, nodes) {
