@@ -106,6 +106,3 @@ def get_excel(board_id: str, frame_id: str, object_id: str) -> Response:
     response.headers.add("Content-Disposition",
                          "attachment; filename=\"schema.xlsx\"")
     return response
-
-
-app.run()
