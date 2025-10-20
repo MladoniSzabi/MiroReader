@@ -12,7 +12,7 @@ from functools import wraps
 dotenv.load_dotenv()
 app = Flask(
     __name__,
-    static_url_path="/static",
+    static_url_path="/miro/static",
     static_folder="static",
     template_folder="templates"
 )
@@ -35,7 +35,7 @@ def auth_required(func):
     return inner
 
 
-@app.route("/")
+@app.route("/miro/")
 @auth_required
 def index() -> str:
     return render_template("index.html")
@@ -46,12 +46,12 @@ def miro_redirect() -> Response:
     code = request.args.get("code")
     miro = miro_api.Miro()
     access_token = miro.exchange_code_for_access_token(code)
-    response = redirect("/")
+    response = redirect("/miro/")
     response.set_cookie("miro_token", access_token, secure=True)
     return response
 
 
-@app.route("/get/boards")
+@app.route("/miro/get/boards")
 @auth_required
 def get_boards() -> Response:
     miro = miro_api.MiroApi(request.cookies.get("miro_token", ""))
@@ -66,7 +66,7 @@ def get_boards() -> Response:
     return response
 
 
-@app.route("/get/board/<string:board_id>/frames")
+@app.route("/miro/get/board/<string:board_id>/frames")
 @auth_required
 def get_frames(board_id: str) -> Response:
     miro = miro_api.MiroApi(request.cookies.get("miro_token", ""))
@@ -82,7 +82,7 @@ def get_frames(board_id: str) -> Response:
     return response
 
 
-@app.route("/get/board/<string:board_id>/frame/<string:frame_id>/objects")
+@app.route("/miro/get/board/<string:board_id>/frame/<string:frame_id>/objects")
 def get_objects(board_id: str, frame_id: str) -> Response:
     miro = miro_api.MiroApi(request.cookies.get("miro_token", ""))
     objects = miro_helper.get_all_instances_cursor(
@@ -97,7 +97,7 @@ def get_objects(board_id: str, frame_id: str) -> Response:
     return response
 
 
-@app.route("/get/board/<string:board_id>/frame/<string:frame_id>/object/<string:object_id>/excel")
+@app.route("/miro/get/board/<string:board_id>/frame/<string:frame_id>/object/<string:object_id>/excel")
 def get_excel(board_id: str, frame_id: str, object_id: str) -> Response:
     access_token = request.cookies.get("miro_token", "")
     bytes = miro_excel_extractor.extract_excel(

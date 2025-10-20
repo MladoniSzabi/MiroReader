@@ -1,5 +1,5 @@
 function downloadExcel(boardId, frameId, nodeId) {
-    window.open("/get/board/" + boardId + "/frame/" + frameId + "/object/" + nodeId + "/excel", "_self")
+    window.open("get/board/" + boardId + "/frame/" + frameId + "/object/" + nodeId + "/excel", "_self")
     // fetch()
 }
 
@@ -58,9 +58,9 @@ function populateFrames(boardId, frames) {
     }
     document.getElementById("select-frame").style.display = "block"
 
-    fetch("/get/board/" + boardId + "/frame/" + selectedFrame + "/objects").then(response => response.json()).then(nodes => populateNodes(boardId, selectedFrame, nodes))
+    fetch("get/board/" + boardId + "/frame/" + selectedFrame + "/objects").then(response => response.json()).then(nodes => populateNodes(boardId, selectedFrame, nodes))
     selectEl.onchange = () => {
-        fetch("/get/board/" + boardId + "/frame/" + selectEl.value + "/objects").then(response => response.json()).then(nodes => populateNodes(boardId, selectEl.value, nodes))
+        fetch("get/board/" + boardId + "/frame/" + selectEl.value + "/objects").then(response => response.json()).then(nodes => populateNodes(boardId, selectEl.value, nodes))
     }
 }
 
@@ -85,10 +85,10 @@ function populateBoards(boards) {
     }
     document.getElementById("select-board").style.display = "block"
 
-    fetch("/get/board/" + selectedBoard + "/frames").then(response => response.json()).then(frames => populateFrames(selectedBoard, frames))
+    fetch("get/board/" + selectedBoard + "/frames").then(response => response.json()).then(frames => populateFrames(selectedBoard, frames))
     selectEl.onchange = () => {
-        fetch("/get/board/" + selectEl.value + "/frames").then(response => response.json()).then(frames => populateFrames(selectEl.value, frames))
+        fetch("get/board/" + selectEl.value + "/frames").then(response => response.json()).then(frames => populateFrames(selectEl.value, frames))
     }
 }
 
-fetch("/get/boards").then(response => response.json()).then(populateBoards)
+fetch("get/boards").then(response => response.json()).then(populateBoards)
